@@ -2,7 +2,7 @@
 
 A containerized full-stack web application built with **Next.js 16**, **MongoDB**, and **Docker**. Users can submit entries via a form; entries are persisted in MongoDB and displayed in real time.
 
-**Live:** [simple-bulletin-board-production.up.railway.app](https://simple-bulletin-board-production.up.railway.app)
+**Live:** [simple-bulletin-board.onrender.com](https://simple-bulletin-board.onrender.com)
 
 ---
 
@@ -13,7 +13,7 @@ A containerized full-stack web application built with **Next.js 16**, **MongoDB*
 | Frontend & API | Next.js 16 (App Router) |
 | Database | MongoDB via Mongoose |
 | Containerization | Docker, Docker Compose |
-| Cloud Deployment | Railway (Docker-native) |
+| Cloud Deployment | Render (Docker-native) |
 | Managed Database | MongoDB Atlas |
 
 ---
@@ -68,15 +68,15 @@ npm run dev
 
 ---
 
-## Deployment (Railway)
+## Deployment (Render)
 
-The app is deployed as a Docker container on [Railway](https://railway.app).
+The app is deployed as a Docker container on [Render](https://render.com).
 
-1. Push to GitHub — Railway detects the `Dockerfile` automatically
-2. Set the `MONGODB_URI` environment variable in Railway (pointing to MongoDB Atlas)
-3. Railway builds the image and assigns a public HTTPS URL
+1. Push to GitHub — Render detects the `Dockerfile` automatically
+2. Set the `MONGODB_URI` environment variable in Render (pointing to MongoDB Atlas)
+3. Render builds the image and assigns a public HTTPS URL
 
-Live URL: [https://simple-bulletin-board-production.up.railway.app](https://simple-bulletin-board-production.up.railway.app)
+Live URL: [https://simple-bulletin-board.onrender.com](https://simple-bulletin-board.onrender.com)
 
 ---
 
