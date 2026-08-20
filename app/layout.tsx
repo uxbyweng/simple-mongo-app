@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Simple Mongo App",
+  title: "Simple Bulletin Board",
   description: "Minimalbeispiel: Next.js + MongoDB + Docker",
 };
 

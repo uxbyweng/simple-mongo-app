@@ -61,7 +61,7 @@ export default function Home() {
 
     return (
         <main style={{ maxWidth: 480, margin: "40px auto", fontFamily: "sans-serif", padding: "0 16px" }}>
-            <h1>Simple Mongo App</h1>
+            <h1>Simple Bulletin Board</h1>
 
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />

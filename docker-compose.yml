@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      MONGODB_URI: mongodb://mongo:27017/simple-mongo-app
+      MONGODB_URI: mongodb://mongo:27017/simple-bulletin-board
     depends_on:
       - mongo
 

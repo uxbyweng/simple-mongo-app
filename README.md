@@ -1,8 +1,8 @@
-# Simple Mongo App
+# Simple Bulletin Board
 
 A containerized full-stack web application built with **Next.js 16**, **MongoDB**, and **Docker**. Users can submit entries via a form; entries are persisted in MongoDB and displayed in real time.
 
-**Live:** [simple-mongo-app-production.up.railway.app](https://simple-mongo-app-production.up.railway.app)
+**Live:** [simple-bulletin-board-production.up.railway.app](https://simple-bulletin-board-production.up.railway.app)
 
 ---
 
@@ -44,8 +44,8 @@ The Dockerfile uses a **3-stage multi-stage build** to keep the production image
 Prerequisites: [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 ```bash
-git clone https://github.com/uxbyweng/simple-mongo-app.git
-cd simple-mongo-app
+git clone https://github.com/uxbyweng/simple-bulletin-board.git
+cd simple-bulletin-board
 docker compose up --build
 ```
 
@@ -76,7 +76,7 @@ The app is deployed as a Docker container on [Railway](https://railway.app).
 2. Set the `MONGODB_URI` environment variable in Railway (pointing to MongoDB Atlas)
 3. Railway builds the image and assigns a public HTTPS URL
 
-Live URL: [https://simple-mongo-app-production.up.railway.app](https://simple-mongo-app-production.up.railway.app)
+Live URL: [https://simple-bulletin-board-production.up.railway.app](https://simple-bulletin-board-production.up.railway.app)
 
 ---
 
