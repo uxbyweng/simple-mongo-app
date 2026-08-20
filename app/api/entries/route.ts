@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
   const entry = await Entry.create({
     name: body.name,
     message: body.message,
+    chalk: typeof body.chalk === "number" ? body.chalk : 0,
   });
 
   return NextResponse.json(entry, { status: 201 });

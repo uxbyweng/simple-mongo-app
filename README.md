@@ -1,6 +1,6 @@
-# Simple Bulletin Board
+# Schwarzes Brett
 
-A containerized full-stack web application built with **Next.js 16**, **MongoDB**, and **Docker**. Users can submit entries via a form; entries are persisted in MongoDB and displayed in real time.
+A containerized full-stack web application built with **Next.js 16**, **MongoDB**, and **Docker**. Features a chalkboard UI where users can post messages in different chalk colors — entries are persisted in MongoDB and displayed on the board.
 
 **Live:** [simple-bulletin-board.onrender.com](https://simple-bulletin-board.onrender.com)
 
@@ -15,6 +15,18 @@ A containerized full-stack web application built with **Next.js 16**, **MongoDB*
 | Containerization | Docker, Docker Compose |
 | Cloud Deployment | Render (Docker-native) |
 | Managed Database | MongoDB Atlas |
+
+---
+
+## Features
+
+- Post messages with your name to the chalkboard
+- Choose from 5 chalk colors (white, yellow, blue, pink, green)
+- Entries displayed as slightly rotated chalk-style cards
+- "wischen" button per entry to erase it with a fade-out animation
+- "Tafel wischen" to erase all entries at once (with confirmation)
+- Character limit (200) with live counter; Cmd/Ctrl + Enter to submit
+- Rate limiting: max 5 POST requests per IP per minute
 
 ---
 
@@ -84,16 +96,17 @@ Live URL: [https://simple-bulletin-board.onrender.com](https://simple-bulletin-b
 
 ```
 app/
-  api/entries/route.ts   — GET (list entries) + POST (create entry)
-  page.tsx               — form + entry list (Client Component)
-  layout.tsx
+  api/entries/route.ts       — GET (list) + POST (create, with rate limiting)
+  api/entries/[id]/route.ts  — DELETE (erase single entry)
+  page.tsx                   — chalkboard UI (Client Component)
+  layout.tsx                 — fonts, global CSS animations
 lib/
-  db.ts                  — Mongoose connection with caching
+  db.ts                      — Mongoose connection with caching
 models/
-  Entry.ts               — Mongoose schema
-Dockerfile               — 3-stage multi-stage build
-docker-compose.yml       — local orchestration (app + mongo)
-.env.example             — required environment variables
+  Entry.ts                   — Mongoose schema (name, message, chalk)
+Dockerfile                   — 3-stage multi-stage build
+docker-compose.yml           — local orchestration (app + mongo)
+.env.example                 — required environment variables
 ```
 
 ---
