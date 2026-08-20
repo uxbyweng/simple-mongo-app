@@ -12,6 +12,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles&family=Single+Day&family=Permanent+Marker&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
