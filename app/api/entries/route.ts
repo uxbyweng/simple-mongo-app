@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { Entry } from "@/models/Entry";
 
+const ipRequests = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = ipRequests.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    ipRequests.set(ip, { count: 1, resetAt: now + 60_000 });
+    return false;
+  }
+  if (entry.count >= 5) return true;
+  entry.count++;
+  return false;
+}
+
 export async function GET() {
   await connectDB();
   const entries = await Entry.find().sort({ createdAt: -1 }).lean();
@@ -9,6 +24,14 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for") ?? "unknown";
+  if (isRateLimited(ip)) {
+    return NextResponse.json(
+      { error: "Zu viele Anfragen. Bitte warte eine Minute." },
+      { status: 429 }
+    );
+  }
+
   await connectDB();
   const body = await request.json();
 
