@@ -2,7 +2,28 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Bulletin Board",
-  description: "Minimalbeispiel: Next.js + MongoDB + Docker",
+  description: "Post a note. Wipe it clean. A chalkboard built with Next.js, MongoDB & Docker.",
+  openGraph: {
+    title: "Bulletin Board",
+    description: "Post a note. Wipe it clean. A chalkboard built with Next.js, MongoDB & Docker.",
+    url: "https://simple-bulletin-board.onrender.com",
+    siteName: "Bulletin Board",
+    images: [
+      {
+        url: "https://simple-bulletin-board.onrender.com/og-image-bulletin-board.png",
+        width: 1200,
+        height: 630,
+        alt: "Bulletin Board – Post a note. Wipe it clean.",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bulletin Board",
+    description: "Post a note. Wipe it clean. A chalkboard built with Next.js, MongoDB & Docker.",
+    images: ["https://simple-bulletin-board.onrender.com/og-image-bulletin-board.png"],
+  },
 };
 
 export default function RootLayout({
