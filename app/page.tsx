@@ -48,6 +48,7 @@ export default function Home() {
     const [chalk, setChalk] = useState(0);
     const [erasing, setErasing] = useState<string[]>([]);
     const [confirmWipe, setConfirmWipe] = useState(false);
+    const [showForm, setShowForm] = useState(false);
 
     async function loadEntries() {
         const res = await fetch("/api/entries");
@@ -70,6 +71,7 @@ export default function Home() {
         });
         setName("");
         setText("");
+        setShowForm(false);
         loadEntries();
     }
 
@@ -168,7 +170,7 @@ export default function Home() {
                             textShadow: "0 0 14px rgba(243,240,230,.18),0 2px 0 rgba(0,0,0,.25)",
                             letterSpacing: ".5px",
                         }}>
-                        Bulletin Board
+                        Board
                     </h1>
                     <svg width="330" height="14" viewBox="0 0 330 14" style={{ display: "block", marginTop: 6, opacity: 0.55 }}>
                         <path d="M2 7 C 70 2, 150 11, 240 5 S 310 9, 328 6" fill="none" stroke="#f3f0e6" strokeWidth="3" strokeLinecap="round" />
@@ -189,150 +191,213 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* Form: Anschreiben */}
-            <div
-                style={{
-                    position: "relative",
-                    margin: "34px 0 0",
-                    padding: "26px 28px 22px",
-                    border: "2px dashed rgba(243,240,230,.22)",
-                    borderRadius: 14,
-                }}>
+            {/* Form overlay */}
+            {showForm && (
                 <div
+                    onClick={() => setShowForm(false)}
                     style={{
-                        position: "absolute",
-                        top: -13,
-                        left: 22,
-                        padding: "0 10px",
-                        background: "#2c3833",
-                        fontFamily: "'Permanent Marker', cursive",
-                        fontSize: 16,
-                        letterSpacing: 1,
-                        color: "rgba(243,240,230,.7)",
+                        position: "fixed",
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0,
+                        background: "rgba(0,0,0,.65)",
+                        zIndex: 200,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 24,
                     }}>
-                    Post a note
-                </div>
-                <div
-                    className="form-grid"
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "minmax(0,1fr) 190px",
-                        gap: 26,
-                        alignItems: "start",
-                    }}>
-                    {/* Left: name + textarea + counter */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 16, minWidth: 0 }}>
-                        <input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Your name"
-                            maxLength={28}
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            position: "relative",
+                            width: "100%",
+                            maxWidth: 560,
+                            borderRadius: 14,
+                            padding: "32px 32px 28px",
+                            background: "radial-gradient(120% 90% at 22% 12%,#3b4a43 0%,#2c3833 45%,#232d29 100%)",
+                            border: "2px dashed rgba(243,240,230,.22)",
+                            boxShadow: "0 24px 60px rgba(0,0,0,.6)",
+                            fontFamily: "'Fuzzy Bubbles', cursive",
+                        }}>
+                        {/* Close button */}
+                        <button
+                            onClick={() => setShowForm(false)}
                             style={{
-                                width: "100%",
-                                boxSizing: "border-box",
+                                position: "absolute",
+                                top: 14,
+                                right: 18,
                                 background: "transparent",
                                 border: "none",
-                                borderBottom: "2px dotted rgba(243,240,230,.3)",
-                                padding: "2px 2px 8px",
-                                fontFamily: "'Permanent Marker', cursive",
-                                fontSize: 24,
-                                color: "#f3f0e6",
-                                caretColor: "#f6e7a8",
-                            }}
-                        />
-                        <textarea
-                            value={text}
-                            onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
-                            onKeyDown={handleKeyDown}
-                            placeholder="What's on your mind?"
-                            rows={3}
-                            style={{
-                                width: "100%",
-                                boxSizing: "border-box",
-                                resize: "vertical",
-                                background: "transparent",
-                                border: "none",
-                                borderBottom: "2px dotted rgba(243,240,230,.3)",
-                                padding: "2px 2px 10px",
-                                fontFamily: "'Fuzzy Bubbles', cursive",
-                                fontSize: 20,
-                                lineHeight: 1.6,
-                                color: "#f3f0e6",
-                                caretColor: "#f6e7a8",
-                            }}
-                        />
+                                color: "rgba(243,240,230,.45)",
+                                fontSize: 22,
+                                lineHeight: 1,
+                                cursor: "pointer",
+                                padding: 4,
+                            }}>
+                            ✕
+                        </button>
                         <div
                             style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 14,
-                                fontFamily: "ui-monospace,Menlo,monospace",
-                                fontSize: 11,
-                                letterSpacing: "1.2px",
-                                color: "rgba(243,240,230,.42)",
-                            }}>
-                            <span>
-                                {text.length} / {MAX_CHARS}
-                            </span>
-                            <span>⌘ + ⏎</span>
-                        </div>
-                    </div>
-
-                    {/* Right: chalk picker + submit */}
-                    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                        <div>
-                            <div
-                                style={{
-                                    fontFamily: "ui-monospace,Menlo,monospace",
-                                    fontSize: 10,
-                                    letterSpacing: "1.6px",
-                                    textTransform: "uppercase",
-                                    color: "rgba(243,240,230,.42)",
-                                    marginBottom: 10,
-                                }}>
-                                Chalk
-                            </div>
-                            <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                                {CHALKS.map((c, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => setChalk(i)}
-                                        title={c.label}
-                                        style={{
-                                            width: i === chalk ? 26 : 22,
-                                            height: i === chalk ? 26 : 22,
-                                            borderRadius: "999px",
-                                            cursor: "pointer",
-                                            background: c.hex,
-                                            border: i === chalk ? "2px solid rgba(243,240,230,.9)" : "2px solid rgba(0,0,0,.2)",
-                                            boxShadow: i === chalk ? `0 0 14px ${c.hex}80` : "none",
-                                            padding: 0,
-                                            transition: "all .18s ease",
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                        <button
-                            onClick={handleSubmit}
-                            style={{
-                                border: `2px solid ${active}8c`,
-                                background: `${active}14`,
-                                color: active,
                                 fontFamily: "'Permanent Marker', cursive",
-                                fontSize: 20,
-                                letterSpacing: ".6px",
-                                padding: "13px 16px",
-                                borderRadius: 999,
-                                cursor: "pointer",
-                                textShadow: `0 0 12px ${active}40`,
-                                transition: "background .2s ease, transform .15s ease",
+                                fontSize: 16,
+                                letterSpacing: 1,
+                                color: "rgba(243,240,230,.7)",
+                                marginBottom: 24,
                             }}>
-                            Post it
-                        </button>
+                            Post a note
+                        </div>
+                        <div
+                            className="form-grid"
+                            style={{
+                                display: "grid",
+                                gridTemplateColumns: "minmax(0,1fr) 190px",
+                                gap: 26,
+                                alignItems: "start",
+                            }}>
+                            {/* Left: name + textarea + counter */}
+                            <div style={{ display: "flex", flexDirection: "column", gap: 16, minWidth: 0 }}>
+                                <input
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Your name"
+                                    maxLength={28}
+                                    style={{
+                                        width: "100%",
+                                        boxSizing: "border-box",
+                                        background: "transparent",
+                                        border: "none",
+                                        borderBottom: "2px dotted rgba(243,240,230,.3)",
+                                        padding: "2px 2px 8px",
+                                        fontFamily: "'Permanent Marker', cursive",
+                                        fontSize: 24,
+                                        color: "#f3f0e6",
+                                        caretColor: "#f6e7a8",
+                                    }}
+                                />
+                                <textarea
+                                    value={text}
+                                    onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
+                                    onKeyDown={handleKeyDown}
+                                    placeholder="What's on your mind?"
+                                    rows={3}
+                                    style={{
+                                        width: "100%",
+                                        boxSizing: "border-box",
+                                        resize: "vertical",
+                                        background: "transparent",
+                                        border: "none",
+                                        borderBottom: "2px dotted rgba(243,240,230,.3)",
+                                        padding: "2px 2px 10px",
+                                        fontFamily: "'Fuzzy Bubbles', cursive",
+                                        fontSize: 20,
+                                        lineHeight: 1.6,
+                                        color: "#f3f0e6",
+                                        caretColor: "#f6e7a8",
+                                    }}
+                                />
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        gap: 14,
+                                        fontFamily: "ui-monospace,Menlo,monospace",
+                                        fontSize: 11,
+                                        letterSpacing: "1.2px",
+                                        color: "rgba(243,240,230,.42)",
+                                    }}>
+                                    <span>
+                                        {text.length} / {MAX_CHARS}
+                                    </span>
+                                    <span>⌘ + ⏎</span>
+                                </div>
+                            </div>
+
+                            {/* Right: chalk picker + submit */}
+                            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                                <div>
+                                    <div
+                                        style={{
+                                            fontFamily: "ui-monospace,Menlo,monospace",
+                                            fontSize: 10,
+                                            letterSpacing: "1.6px",
+                                            textTransform: "uppercase",
+                                            color: "rgba(243,240,230,.42)",
+                                            marginBottom: 10,
+                                        }}>
+                                        Chalk
+                                    </div>
+                                    <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                                        {CHALKS.map((c, i) => (
+                                            <button
+                                                key={i}
+                                                onClick={() => setChalk(i)}
+                                                title={c.label}
+                                                style={{
+                                                    width: i === chalk ? 26 : 22,
+                                                    height: i === chalk ? 26 : 22,
+                                                    borderRadius: "999px",
+                                                    cursor: "pointer",
+                                                    background: c.hex,
+                                                    border: i === chalk ? "2px solid rgba(243,240,230,.9)" : "2px solid rgba(0,0,0,.2)",
+                                                    boxShadow: i === chalk ? `0 0 14px ${c.hex}80` : "none",
+                                                    padding: 0,
+                                                    transition: "all .18s ease",
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={handleSubmit}
+                                    style={{
+                                        border: `2px solid ${active}8c`,
+                                        background: `${active}14`,
+                                        color: active,
+                                        fontFamily: "'Permanent Marker', cursive",
+                                        fontSize: 20,
+                                        letterSpacing: ".6px",
+                                        padding: "13px 16px",
+                                        borderRadius: 999,
+                                        cursor: "pointer",
+                                        textShadow: `0 0 12px ${active}40`,
+                                        transition: "background .2s ease, transform .15s ease",
+                                    }}>
+                                    Post it
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
+
+            {/* FAB: open form */}
+            <button
+                onClick={() => setShowForm(true)}
+                title="Post a note"
+                style={{
+                    position: "fixed",
+                    bottom: 32,
+                    right: 32,
+                    width: 56,
+                    height: 56,
+                    borderRadius: "50%",
+                    background: "linear-gradient(135deg,#3b82f6,#1d4ed8)",
+                    border: "none",
+                    color: "#fff",
+                    fontSize: 30,
+                    lineHeight: 1,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 20px rgba(59,130,246,.55),0 2px 6px rgba(0,0,0,.4)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 100,
+                    transition: "transform .15s ease, box-shadow .15s ease",
+                }}>
+                +
+            </button>
 
             {/* Angeschrieben header + wipe controls */}
             <div
@@ -344,16 +409,6 @@ export default function Home() {
                     gap: 16,
                     margin: "38px 0 20px",
                 }}>
-                <h2
-                    style={{
-                        margin: 0,
-                        fontFamily: "'Permanent Marker', cursive",
-                        fontWeight: 400,
-                        fontSize: 26,
-                        color: "rgba(243,240,230,.82)",
-                    }}>
-                    On the board
-                </h2>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     {confirmWipe && (
                         <div
