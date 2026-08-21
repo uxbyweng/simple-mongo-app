@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 
 const CHALKS = [
-    { label: "Kreideweiß", hex: "#f3f0e6" },
-    { label: "Sonnengelb", hex: "#f6e7a8" },
-    { label: "Himmelblau", hex: "#bcd9e8" },
-    { label: "Altrosa", hex: "#f2c9cf" },
-    { label: "Wiesengrün", hex: "#c9e3c1" },
+    { label: "Chalk White", hex: "#f3f0e6" },
+    { label: "Sunny Yellow", hex: "#f6e7a8" },
+    { label: "Sky Blue", hex: "#bcd9e8" },
+    { label: "Dusty Rose", hex: "#f2c9cf" },
+    { label: "Meadow Green", hex: "#c9e3c1" },
 ];
 
 const TILTS = [-0.9, 0.7, -0.4, 1.1, -1.2, 0.5, -0.7, 0.9];
@@ -27,10 +27,10 @@ function tilt(id: string): number {
 function fmt(ts: string): string {
     const date = new Date(ts);
     const mins = Math.round((Date.now() - date.getTime()) / 60000);
-    if (mins < 1) return "gerade eben";
-    if (mins < 60) return `vor ${mins} min`;
-    if (mins < 1440) return `vor ${Math.round(mins / 60)} h`;
-    return date.toLocaleDateString("de-DE", { day: "2-digit", month: "short" });
+    if (mins < 1) return "just now";
+    if (mins < 60) return `${mins} min ago`;
+    if (mins < 1440) return `${Math.round(mins / 60)} h ago`;
+    return date.toLocaleDateString("en-US", { day: "2-digit", month: "short" });
 }
 
 type Entry = {
@@ -97,12 +97,12 @@ export default function Home() {
         }, 420);
     }
 
-    const today = new Date().toLocaleDateString("de-DE", {
+    const today = new Date().toLocaleDateString("en-US", {
         weekday: "long",
         day: "2-digit",
         month: "long",
     });
-    const countLabel = entries.length === 1 ? "1 Mitteilung" : `${entries.length} Mitteilungen`;
+    const countLabel = entries.length === 1 ? "1 message" : `${entries.length} messages`;
     const active = CHALKS[chalk].hex;
 
     return (
@@ -168,7 +168,7 @@ export default function Home() {
                             textShadow: "0 0 14px rgba(243,240,230,.18),0 2px 0 rgba(0,0,0,.25)",
                             letterSpacing: ".5px",
                         }}>
-                        Schwarzes Brett
+                        Bulletin Board
                     </h1>
                     <svg width="330" height="14" viewBox="0 0 330 14" style={{ display: "block", marginTop: 6, opacity: 0.55 }}>
                         <path d="M2 7 C 70 2, 150 11, 240 5 S 310 9, 328 6" fill="none" stroke="#f3f0e6" strokeWidth="3" strokeLinecap="round" />
@@ -210,7 +210,7 @@ export default function Home() {
                         letterSpacing: 1,
                         color: "rgba(243,240,230,.7)",
                     }}>
-                    Anschreiben
+                    Post a note
                 </div>
                 <div
                     className="form-grid"
@@ -225,7 +225,7 @@ export default function Home() {
                         <input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="Dein Name"
+                            placeholder="Your name"
                             maxLength={28}
                             style={{
                                 width: "100%",
@@ -244,7 +244,7 @@ export default function Home() {
                             value={text}
                             onChange={(e) => setText(e.target.value.slice(0, MAX_CHARS))}
                             onKeyDown={handleKeyDown}
-                            placeholder="Was soll an der Tafel stehen?"
+                            placeholder="What's on your mind?"
                             rows={3}
                             style={{
                                 width: "100%",
@@ -290,7 +290,7 @@ export default function Home() {
                                     color: "rgba(243,240,230,.42)",
                                     marginBottom: 10,
                                 }}>
-                                Kreide
+                                Chalk
                             </div>
                             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                                 {CHALKS.map((c, i) => (
@@ -328,7 +328,7 @@ export default function Home() {
                                 textShadow: `0 0 12px ${active}40`,
                                 transition: "background .2s ease, transform .15s ease",
                             }}>
-                            Ans Brett
+                            Post it
                         </button>
                     </div>
                 </div>
@@ -352,7 +352,7 @@ export default function Home() {
                         fontSize: 26,
                         color: "rgba(243,240,230,.82)",
                     }}>
-                    Angeschrieben
+                    On the board
                 </h2>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     {confirmWipe && (
@@ -366,7 +366,7 @@ export default function Home() {
                                 letterSpacing: "1.2px",
                                 color: "rgba(243,240,230,.55)",
                             }}>
-                            <span>Alles wegwischen?</span>
+                            <span>Erase everything?</span>
                             <button
                                 onClick={wipeAll}
                                 style={{
@@ -380,7 +380,7 @@ export default function Home() {
                                     letterSpacing: "1.2px",
                                     cursor: "pointer",
                                 }}>
-                                Ja
+                                Yes
                             </button>
                             <button
                                 onClick={() => setConfirmWipe(false)}
@@ -395,7 +395,7 @@ export default function Home() {
                                     letterSpacing: "1.2px",
                                     cursor: "pointer",
                                 }}>
-                                Nein
+                                No
                             </button>
                         </div>
                     )}
@@ -414,7 +414,7 @@ export default function Home() {
                                 cursor: "pointer",
                                 padding: "5px 0",
                             }}>
-                            Tafel wischen
+                            Wipe board
                         </button>
                     )}
                 </div>
@@ -431,7 +431,7 @@ export default function Home() {
                         fontSize: 22,
                         color: "rgba(243,240,230,.35)",
                     }}>
-                    Die Tafel ist blitzsauber. Schreib den ersten Zettel an.
+                    The board is squeaky clean. Be the first to post a note.
                 </div>
             )}
 
@@ -493,7 +493,7 @@ export default function Home() {
                                         opacity: 0.32,
                                         cursor: "pointer",
                                     }}>
-                                    wischen
+                                    erase
                                 </button>
                             </div>
                             <p

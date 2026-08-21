@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Schwarzes Brett",
+  title: "Bulletin Board",
   description: "Minimalbeispiel: Next.js + MongoDB + Docker",
 };
 

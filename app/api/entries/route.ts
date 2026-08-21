@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for") ?? "unknown";
   if (isRateLimited(ip)) {
     return NextResponse.json(
-      { error: "Zu viele Anfragen. Bitte warte eine Minute." },
+      { error: "Too many requests. Please wait a minute." },
       { status: 429 }
     );
   }
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
   if (!body.name || !body.message) {
     return NextResponse.json(
-      { error: "name und message sind erforderlich" },
+      { error: "name and message are required" },
       { status: 400 }
     );
   }
