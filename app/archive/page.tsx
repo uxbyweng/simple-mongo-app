@@ -168,6 +168,7 @@ export default function Archive() {
                                         lineHeight: 1.6,
                                         color: "rgba(243,240,230,.75)",
                                         overflowWrap: "break-word",
+                                        whiteSpace: "pre-wrap",
                                     }}>
                                     {entry.message}
                                 </p>

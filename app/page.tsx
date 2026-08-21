@@ -571,6 +571,7 @@ export default function Home() {
                                     fontSize: 19,
                                     lineHeight: 1.58,
                                     opacity: 0.94,
+                                    whiteSpace: "pre-wrap",
                                 }}>
                                 {entry.message}
                             </p>
