@@ -34,6 +34,10 @@ export default function RootLayout({
   return (
     <html lang="de">
       <head>
+        <meta property="og:image" content="https://simple-bulletin-board.onrender.com/og-image-bulletin-board.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Bulletin Board – Post a note. Wipe it clean." />
         <link
           href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Fuzzy+Bubbles:wght@400;700&display=swap"
           rel="stylesheet"
