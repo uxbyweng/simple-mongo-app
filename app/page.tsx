@@ -173,8 +173,8 @@ export default function Home() {
                         }}>
                         Board
                     </h1>
-                    <svg width="330" height="14" viewBox="0 0 330 14" style={{ display: "block", marginTop: 6, opacity: 0.55 }}>
-                        <path d="M2 7 C 70 2, 150 11, 240 5 S 310 9, 328 6" fill="none" stroke="#f3f0e6" strokeWidth="3" strokeLinecap="round" />
+                    <svg width="150" height="14" viewBox="0 0 150 14" style={{ display: "block", marginTop: 6, opacity: 0.55 }}>
+                        <path d="M2 7 C 32 2, 68 11, 110 5 S 140 9, 148 6" fill="none" stroke="#f3f0e6" strokeWidth="3" strokeLinecap="round" />
                     </svg>
                 </div>
                 <div
