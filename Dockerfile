@@ -69,6 +69,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Die statischen Assets (JS, CSS, Bilder) separat kopieren –
 # Next.js erwartet sie unter .next/static relativ zum Server
 
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+# public/ muss explizit kopiert werden – standalone kopiert es nicht automatisch
+
 USER nextjs
 # Ab hier läuft alles als "nextjs"-User, nicht mehr als root
 
