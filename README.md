@@ -20,13 +20,16 @@ A containerized full-stack web application built with **Next.js 16**, **MongoDB*
 
 ## Features
 
-- Post messages with your name to the chalkboard
+- Post messages with your name to the chalkboard via FAB overlay form
 - Choose from 5 chalk colors (white, yellow, blue, pink, green)
-- Entries displayed as slightly rotated chalk-style cards
-- "wischen" button per entry to erase it with a fade-out animation
-- "Tafel wischen" to erase all entries at once (with confirmation)
+- Entries displayed as slightly rotated chalk-style cards with animations
+- "erase" button per entry with fade-out animation (soft delete — kept in archive)
+- "Wipe board" to erase all entries at once (with confirmation)
 - Character limit (200) with live counter; Cmd/Ctrl + Enter to submit
+- Line breaks preserved in posts
+- Archive page (`/archive`) — full history of all posts, newest first; erased entries marked and restorable
 - Rate limiting: max 5 POST requests per IP per minute
+- Open Graph / social meta tags with custom OG image
 
 ---
 
@@ -96,15 +99,19 @@ Live URL: [https://simple-bulletin-board.onrender.com](https://simple-bulletin-b
 
 ```
 app/
-  api/entries/route.ts       — GET (list) + POST (create, with rate limiting)
-  api/entries/[id]/route.ts  — DELETE (erase single entry)
+  api/entries/route.ts       — GET (active only) + POST (create, rate limiting)
+  api/entries/[id]/route.ts  — DELETE (soft delete) + PATCH (restore)
+  api/archive/route.ts       — GET (all entries incl. erased)
+  archive/page.tsx           — archive UI (Client Component)
   page.tsx                   — chalkboard UI (Client Component)
-  layout.tsx                 — fonts, global CSS animations
+  layout.tsx                 — fonts, OG meta tags, global CSS animations
 lib/
   db.ts                      — Mongoose connection with caching
 models/
-  Entry.ts                   — Mongoose schema (name, message, chalk)
-Dockerfile                   — 3-stage multi-stage build
+  Entry.ts                   — Mongoose schema (name, message, chalk, deletedAt)
+public/
+  og-image-bulletin-board.png — Open Graph image
+Dockerfile                   — 3-stage multi-stage build (public/ copied explicitly)
 docker-compose.yml           — local orchestration (app + mongo)
 .env.example                 — required environment variables
 ```
