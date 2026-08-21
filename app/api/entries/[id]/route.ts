@@ -8,6 +8,16 @@ export async function DELETE(
 ) {
   await connectDB();
   const { id } = await params;
-  await Entry.findByIdAndDelete(id);
+  await Entry.findByIdAndUpdate(id, { deletedAt: new Date() });
+  return NextResponse.json({ success: true });
+}
+
+export async function PATCH(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  await connectDB();
+  const { id } = await params;
+  await Entry.findByIdAndUpdate(id, { deletedAt: null });
   return NextResponse.json({ success: true });
 }

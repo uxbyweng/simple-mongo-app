@@ -5,6 +5,7 @@ const EntrySchema = new Schema(
     name: { type: String, required: true },
     message: { type: String, required: true },
     chalk: { type: Number, default: 0 },
+    deletedAt: { type: Date, default: null },
   },
   { timestamps: true }
 );

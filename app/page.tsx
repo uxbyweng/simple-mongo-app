@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const CHALKS = [
     { label: "Chalk White", hex: "#f3f0e6" },
@@ -261,7 +262,7 @@ export default function Home() {
                                 <input
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    placeholder="Your name"
+                                    placeholder="name / topic"
                                     maxLength={28}
                                     style={{
                                         width: "100%",
@@ -472,6 +473,19 @@ export default function Home() {
                             Wipe board
                         </button>
                     )}
+                    <Link
+                        href="/archive"
+                        style={{
+                            color: "rgba(243,240,230,.4)",
+                            fontFamily: "ui-monospace,Menlo,monospace",
+                            fontSize: 11,
+                            letterSpacing: "1.4px",
+                            textTransform: "uppercase",
+                            textDecoration: "none",
+                            padding: "5px 0",
+                        }}>
+                        Archive
+                    </Link>
                 </div>
             </div>
 

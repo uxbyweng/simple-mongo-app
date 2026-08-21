@@ -19,7 +19,7 @@ function isRateLimited(ip: string): boolean {
 
 export async function GET() {
   await connectDB();
-  const entries = await Entry.find().sort({ createdAt: -1 }).lean();
+  const entries = await Entry.find({ deletedAt: null }).sort({ createdAt: -1 }).lean();
   return NextResponse.json(entries);
 }
 
