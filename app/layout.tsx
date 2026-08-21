@@ -30,6 +30,9 @@ export default function RootLayout({
           }
           .chalk-erase:hover { opacity: .9 !important; }
           .chalk-wipe:hover { color: rgba(243,240,230,.8) !important; }
+          @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr !important; }
+          }
         `}</style>
       </head>
       <body>{children}</body>
